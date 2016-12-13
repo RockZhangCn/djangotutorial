@@ -46,7 +46,7 @@ class IndexView(generic.ListView):
 	def get_queryset(self):
 		"""Return the last five published questions."""
 		# return Question.objects.order_by('-pub_date')[:5]
-		my_query_set = Question.objects.filter(pub_date__lte=timezone.now()).filter()
+		my_query_set = Question.objects.filter(pub_date__lte=timezone.now())
 		my_choice_set = Choice.objects.all()
 		for choice in my_choice_set:
 			choice.question.has_choice = True
