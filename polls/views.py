@@ -5,6 +5,7 @@ from django.template import loader
 from django.http import Http404
 from django.urls import reverse
 from django.views import generic
+from django.utils import timezone
 
 
 def index(request):
@@ -44,11 +45,24 @@ class IndexView(generic.ListView):
 
 	def get_queryset(self):
 		"""Return the last five published questions."""
-		return Question.objects.order_by('-pub_date')[:5]
+		# return Question.objects.order_by('-pub_date')[:5]
+		my_query_set = Question.objects.filter(pub_date__lte=timezone.now()).filter()
+		my_choice_set = Choice.objects.all()
+		for choice in my_choice_set:
+			choice.question.has_choice = True
+			choice.question.save()
+
+		my_query_set = my_query_set.filter(has_choice = True)
+
+		return my_query_set.order_by('-pub_date')[:5]
+
 
 class DetailView(generic.DetailView):
 	model = Question
 	template_name = 'polls/detail.html'
+
+	def get_queryset(self):
+		return Question.objects.filter(pub_date__lte=timezone.now())
 
 
 class ResultView(generic.DetailView):
