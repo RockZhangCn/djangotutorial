@@ -143,7 +143,7 @@ class QuestionIndexDetailTests(TestCase):
 
 	def test_detail_view_with_a_past_question(self):
 		"""
-        The detail view of a question with a pub_date in the past should
+		The detail view of a question with a pub_date in the past should
         display the question's text.
         """
 		past_question = create_question(question_text='Past Question.', days=-5)
