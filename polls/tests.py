@@ -44,10 +44,10 @@ def create_question(question_text, days):
 	given number of `days` offset to now (negative for questions published
 	in the past, positive for questions that have yet to be published).
 	"""
-	time = timezone.now() + datetime.timedelta(days=days)
-	q = Question.objects.create(question_text=question_text, pub_date=time)
-	Choice.objects.create(question = q)
-	return q
+    time = timezone.now() + datetime.timedelta(days=days)
+    q = Question.objects.create(question_text=question_text, pub_date=time)
+    Choice.objects.create(question = q)
+    return q
 
 
 class QuestionViewTests(TestCase):
